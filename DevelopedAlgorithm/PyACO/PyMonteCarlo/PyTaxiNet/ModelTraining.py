@@ -62,7 +62,7 @@ def getFiles(directory):
 #Further trains a given model with process data
 def train(varBatchSize, varEpochs, model, PSIData, DSIData, PQIData, DQIData):
 	#Switch to correct directory
-	checkpoint = ModelCheckpoint(filepath='' + 'WEIGHTSRound3-{epoch:02d}.hdf5', monitor='loss', verbose=0, save_best_only=True, save_weights_only=False, mode='auto', period=1)
+	checkpoint = ModelCheckpoint(filepath='' + 'WEIGHTS-{epoch:02d}.hdf5', monitor='loss', verbose=0, save_best_only=True, save_weights_only=False, mode='auto', period=1)
 	#Switch to correct directory
 	saver = ModelCheckpoint(filepath='' + 'Latest.hdf5', monitor='val_loss', verbose=0, save_best_only=False, save_weights_only=False, mode='auto', period=1)
 	#Switch to correct directory

@@ -16,7 +16,9 @@ from tensorflow.keras.utils import plot_model
 import pydot
 import graphviz
 
-
+FILEPATHTODIAGRAM = ''
+FILEPATHTOARCHJSON = ''
+FILEPATHTOWEIGHTS = ''
 #Generates a keras model object for training. Model has the designed archetecture and loads the latest weights.
 def genModel(sampleSize, version, spatialWeight, quantityWeight,lr):
 
@@ -84,14 +86,14 @@ def genModel(sampleSize, version, spatialWeight, quantityWeight,lr):
 	TaxiNet = Model(inputs=[pickupSpatialInput, dropoffSpatialInput, pickupQuantityInput, dropoffQuantityInput], outputs=[pickupSpatialOutput, dropoffSpatialOutput, pickupQuantityOutput, dropoffQuantityOutput])
 
 
-	plot_model(TaxiNet,"/Users/Apps44K/Documents/TaxiOptimization/Machine_Learning/MIMOModel/SavedModel/Architecture/Diagrams/MIMO.png")
+	plot_model(TaxiNet,FILEPATHTODIAGRAM)
 
 	model_json = TaxiNet.to_json()
-	with open("/Users/Apps44K/Documents/TaxiOptimization/Machine_Learning/MIMOModel/SavedModel/Architecture/JSON/Version-" + str(version) + ".json", "w") as json_file:
+	with open(FILEPATHTOARCHJSON, "w") as json_file:
 		json_file.write(model_json)
 
-	if(os.path.exists("/Users/Apps44K/Documents/TaxiOptimization/Machine_Learning/MIMOModel/SavedModel/Weights/Latest.hdf5")):
-		TaxiNet.load_weights("/Users/Apps44K/Documents/TaxiOptimization/Machine_Learning/MIMOModel/SavedModel/Weights/Latest.hdf5")
+	if(os.path.exists(FILEPATHTOWEIGHTS)):
+		TaxiNet.load_weights(FILEPATHTOWEIGHTS)
 	opt = tf.keras.optimizers.RMSprop(learning_rate=lr)
 	TaxiNet.compile(loss={'Pickup_Spatial_Output': 'mse', 'Dropoff_Spatial_Output': 'mse', 'Pickup_Quantity_Output' : 'mse', 'Dropoff_Quantity_Output' : 'mse'}, optimizer=opt, loss_weights={'Pickup_Spatial_Output': spatialWeight, 'Dropoff_Spatial_Output': spatialWeight, 'Pickup_Quantity_Output' : quantityWeight, 'Dropoff_Quantity_Output' : quantityWeight}, metrics = ['mae'])
 	return TaxiNet

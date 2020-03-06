@@ -1,7 +1,7 @@
 #During the training of the taxi demand prediction model, the following code was used to ensure that all four demand components (pickup quantity, dropoff quantity, pickup distribution, dropoff distribution) had the same data points
-
+FILEPATHTODATA = ''
 import os
-os.chdir('/Volumes/Sparsh_Passport/Sparsh-Data/ScienceFair/TaxiOptimization/Machine_Learning/MIMOModel/Data')
+os.chdir(FILEPATHTODATA)
 
 DQPoints = os.listdir('DropoffQuantity')
 DSPoints = os.listdir('DropoffSpatial')
