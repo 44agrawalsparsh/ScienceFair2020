@@ -26,6 +26,7 @@ Tensorflow 2.0, sklearn, numpy, scipy, pandas, shapely, datetime, subprocess, mu
 # Environment in which code works on:
 
 macOS 10.14.6
+
 python 3.6.6
 
 # Set up:
