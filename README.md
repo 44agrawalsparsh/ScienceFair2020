@@ -19,16 +19,16 @@ Using the simulator and visualization software is very easy. For the simulator, 
 
 Raw data is available at: https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page
 
-#Libraries Used:
+# Libraries Used:
 
 Tensorflow 2.0, sklearn, numpy, scipy, pandas, shapely, datetime, subprocess, multiprocessing, random, joblib, copy, os, sys, matplotlib, operater, csv, interruptingcow, cv2, PIL, imageio, pickle, time, statistics, pydot, graphviz
 
-#Environment on which code works on:
+# Environment on which code works on:
 
 macOS 10.14.6
 python 3.6.6
 
-#Set up:
+# Set up:
 
 The code should work as is in any environment that has the neccessary libraries as well as the correct version of python. All zip files within the repository will have to be unzipped as well. There is an unix executable contained in the PyClusterize model of this program for the redistictring algorithm. If a non-unix environment is utilized, a makefile located in the C-Code file on the PyClusterize model can be utilized to generate a new executable. Note the executable would have to be moved to the PyClusterize module and some adjustments will have to made depending on the machine used.
 
