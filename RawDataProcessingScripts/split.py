@@ -21,13 +21,11 @@ createFolder(BASEDIR +'/TRIPRECORDSSIMULATION')
 sortedPickupFile = ''
 sortedDropoffFile = ''
 
-#If the month of the file being split is before October
-'''date_time_str = str(j) + "-0" + str(k) + "-21 00:00:00"
-date_time_object = datetime.strptime(date_time_str, "%Y-%m-%d %H:%M:%S")'''
+startDateTime = '' #Format is "%Y-%m-%d %H:%M:%S"
 
-#If the month of the file being split is October or later
-'''date_time_str = str(j) + "-" + str(k) + "-21 00:00:00"
-date_time_object = datetime.strptime(date_time_str, "%Y-%m-%d %H:%M:%S")'''
+
+date_time_object = datetime.strptime(date_time_str, "%Y-%m-%d %H:%M:%S")
+
 
 #Split the pickup data
 with open(sortedPickupFile, 'rb') as source:
@@ -61,13 +59,7 @@ with open(sortedPickupFile, 'rb') as source:
 
 
 
-#If the month of the file being split is before October
-'''date_time_str = str(j) + "-0" + str(k) + "-21 00:00:00"
-date_time_object = datetime.strptime(date_time_str, "%Y-%m-%d %H:%M:%S")'''
-
-#If the month of the file being split is October or later
-'''date_time_str = str(j) + "-" + str(k) + "-21 00:00:00"
-date_time_object = datetime.strptime(date_time_str, "%Y-%m-%d %H:%M:%S")'''
+date_time_object = datetime.strptime(date_time_str, "%Y-%m-%d %H:%M:%S")
 
 #Split the dropoff data
 with open(sortedDropoffFile, 'rb') as source:

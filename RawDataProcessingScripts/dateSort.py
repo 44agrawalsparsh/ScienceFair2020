@@ -2,7 +2,8 @@ import csv
 import operator
 
 inputFile = ''
-
+pickupOutputFile = ''
+dropoffOutputFile = ''
 
 #Sort by pickup datetime
 
@@ -18,8 +19,8 @@ sortedlist = sorted(
         key=lambda r: (r[0])) #Sorted by pickup date
 
 ifile.close
-# open the output file - it can be the same as the input file
-outfile = csv.writer(open('', 'w'), delimiter=',')
+# open the output file
+outfile = csv.writer(open(pickupOutputFile, 'w'), delimiter=',')
 
 # write the sorted list
 for row in sortedlist:
@@ -44,8 +45,8 @@ sortedlist = sorted(
         key=lambda r: (r[1])) #Sorted by dropoff date
 
 ifile.close
-# open the output file - it can be the same as the input file
-outfile = csv.writer(open('', 'w'), delimiter=',')
+# open the output file
+outfile = csv.writer(open(dropoffOutputFile, 'w'), delimiter=',')
 
 # write the sorted list
 for row in sortedlist:
