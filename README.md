@@ -15,8 +15,7 @@ Along with the developed algorithm, a simulator has been created. This simulator
 
 The simulator outputs a passenger and taxi log. The passenger log contains a list of all of the passenegrs present in the scenario, their pickup time, their dropoff time, and their trip's fee. The taxi log contains a list of all of the taxi's assignemnts (both dispatches and passenger trips) and their length. The visualizations folder contains multple scripts to visualize the performance of the fleet based on these logs.
 
-Using the simulator and visualization software is very easy. For the simulator, all that needs to be specified is whether the developed algorithm or base algorithm should be used to manage the fleet. Additionally, the RAWDATA.zip file (located in R
-edvelopedAlgorithm) should be unzipped as well as the Model.zip file (located in DevelopedAlgorithm/PyACO/PyMonteCarlo). The visualization sofwtare simply requires the output logs of a simulation on the developed algorithm and status quo system to be placed in a folder called SIMULATORLOGS and then into either ALGO_RESULTS or BASE_RESULTS.
+Using the simulator and visualization software is very easy. For the simulator, all that needs to be specified is whether the developed algorithm or base algorithm should be used to manage the fleet. Additionally, the RAWDATA.zip file (located in DevelopedAlgorithm) should be unzipped as well as the Model.zip file (located in DevelopedAlgorithm/PyACO/PyMonteCarlo). The visualization sofwtare simply requires the output logs of a simulation on the developed algorithm and status quo system to be placed in a folder called SIMULATORLOGS and then into either ALGO_RESULTS or BASE_RESULTS.
 
 Raw data is available at: https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page
 
@@ -47,7 +46,7 @@ The simulator can easily be run through:
 python Simulator.py
 ```
 
-**Note that after each time the simulator is run, the data in 
+**Note that after each time the simulator is run, the data in the indiviudal folders in DevelopedAlgorihtm/RAWDATA should be cleared. Additionally, the file DevelopedAlgorihtm/RAWDATA/listOfPoints.csv should be made blank again**
 
 # How to train the model
 
