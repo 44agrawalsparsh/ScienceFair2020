@@ -23,7 +23,7 @@ Raw data is available at: https://www1.nyc.gov/site/tlc/about/tlc-trip-record-da
 
 Tensorflow 2.0, sklearn, numpy, scipy, pandas, shapely, datetime, subprocess, multiprocessing, random, joblib, copy, os, sys, matplotlib, operater, csv, interruptingcow, cv2, PIL, imageio, pickle, time, statistics, pydot, graphviz
 
-# Environment on which code works on:
+# Environment in which code works on:
 
 macOS 10.14.6
 python 3.6.6
