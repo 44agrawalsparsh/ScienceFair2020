@@ -588,7 +588,7 @@ FILENAME = '2019-03-21T10-00-00.csv'
 
 USE_DEVELOPED = True
 
-getStarted(filename, USE_DEVELOPED)
+getStarted(FILENAME, USE_DEVELOPED)
 
 if USE_DEVELOPED:
 	for i in range(100):
