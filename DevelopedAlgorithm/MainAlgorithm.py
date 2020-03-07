@@ -19,6 +19,7 @@ TripPredictor.NUMBEROFPREDICTIONS = (6 + 3) #6 timesteps of trips plus 3 timeste
 	
 #A single timestep. Stores the state of passengers, taxis and a PathFinder object.
 class RouteFrame:
+	
 	def __init__(self):
 		#The number of taxis expected to be full during the entirety of the timestep
 		self.BusyTaxiCount = 0
@@ -34,17 +35,21 @@ class RouteFrame:
 		self.TaxiLocations45Delay = []
 		self.Optimizer = None
 		self.OptimizerType = 'GREEDY'
+		
 	#Sort the passenger and taxi locations
 	def sortLocations(self):
 		self.PassengerLocations.sort(key = ACO.Graph.sortKey)
 		self.TaxiLocations.sort(key = ACO.Graph.sortKey)
+		
 	#Add a PathFinder object
 	def addPathFinder(self, pathfinder, Greedy):
 		self.Optimizer = pathfinder
+		
 		if Greedy:
 			self.OptimizerType = 'GREEDY'
 		else:
 			self.OptimizerType = 'ACO'
+			
 	def __repr__(self):
 		return "<BusyTaxiCount:%s PassengerCount:%s TaxiCount:%s RemainingTaxis: %s TaxiLocations30Delay: %s TaxiLocations45Delay: %s>" % (self.BusyTaxiCount, len(self.PassengerLocations), len(self.TaxiLocations), len(self.RemainingTaxis), len(self.TaxiLocations30Delay), len(self.TaxiLocations45Delay))
 	def __str__(self):
@@ -52,11 +57,13 @@ class RouteFrame:
 
 #A TripBench object manages a series of route frames
 class TripBench:
+	
 	def __init__(self, samples):
 		self.Bench = np.empty(shape=samples, dtype=object)
 		self.Trips = []
 		for i in range(len(self.Bench)):
 			self.Bench[i] = RouteFrame()
+			
 	#With the updated set of predicted trips, the trip bench leaps forward one timestep.
 	def moveForward(self, trips):
 		#Updates the set of trips
@@ -225,7 +232,9 @@ def getPointFromPoly(poly, polyIndex, route_frame, taxi, numPolies):
 
 #Given a list of polygons and a point, identify the polygon that contains the point. This method is faster than getPolyFromPointBare because it inputs the index of the point allowing for a base estimate of which polygon contains the point.
 def getPolyFromPoint(poliesList, point, index, max_range):
+	
 	midIndex = int(index/max_range*len(poliesList))
+	
 	if(poliesList[midIndex].contains(ACO.Graph.convertToShapely(point))):
 		return midIndex
 	for i in range(1000):
@@ -237,9 +246,11 @@ def getPolyFromPoint(poliesList, point, index, max_range):
 			poly2 = poliesList[midIndex - i]
 			if(poly2.contains(ACO.Graph.convertToShapely(point))):
 				return midIndex - i
+			
 #Given a list of polygons and a point, identify the polygon that contains the point.
 def getPolyFromPointBare(poliesList, point):
 	midIndex = int(len(poliesList)/2)
+	
 	if(poliesList[midIndex].contains(ACO.Graph.convertToShapely(point))):
 		return midIndex
 	for i in range(1000):
@@ -266,6 +277,7 @@ REAL_DATE_TO_SIM = 0
 
 #Generate converters for SIMDATE to REALDATe and vice versa
 def startSimDate(fileName):
+	
 	simDate = datetime.datetime.strptime(fileName, '%Y-%m-%dT%H-%M-%S.csv')
 	curDate = datetime.datetime.now()
 	difference = curDate - simDate
@@ -277,6 +289,7 @@ def startSimDate(fileName):
 
 #Given a start file and taxi count, set up a bench to use the algorithm. Output the local greedy solution for the first few timesteps.
 def setUp(startFile, numTaxis):
+	
 	SIM_DATE_TO_REAL, REAL_DATE_TO_SIM = startSimDate(startFile)
 	simStart = datetime.datetime.strptime(startFile, '%Y-%m-%dT%H-%M-%S.csv')
 	setUpEnd = simStart + datetime.timedelta(minutes=15)
@@ -284,6 +297,7 @@ def setUp(startFile, numTaxis):
 	optBench.Trips = TripPredictor.getTrips(startFile)
 	taxis = ACO.genRandomTaxis(numTaxis)
 	cityPoly = ACO.genNYC()
+	
 	for taxi in taxis:
 		optBench.Bench[0].TaxiLocations.append(ACO.Graph.convertToShapely(taxi))
 	for i in range(len(optBench.Trips)):
@@ -296,9 +310,9 @@ def setUp(startFile, numTaxis):
 		greedy = True
 		if(timestep == TripPredictor.NUMBEROFPREDICTIONS - 3 - 1):
 			greedy = False
-
 		routeFrame = optBench.Bench[timestep]
 		routeFrame.sortLocations()
+		
 		if(greedy):
 			finder =  genGreedyFinder(routeFrame.TaxiLocations, routeFrame.PassengerLocations)
 			routeFrame.addPathFinder(finder, greedy)
@@ -308,10 +322,14 @@ def setUp(startFile, numTaxis):
 			routeFrame.addPathFinder(finder, greedy)
 			while(REAL_DATE_TO_SIM(datetime.datetime.now()) < setUpEnd - datetime.timedelta(minutes=1)):
 				routeFrame.Optimizer.iterate()
+				
 		path = routeFrame.Optimizer.getBestPath()
 		TripSet = copy.deepcopy(optBench.Trips[timestep])
+		
 		if len(routeFrame.TaxiLocations) > len(routeFrame.PassengerLocations):
+			
 			for trip in TripSet:
+				
 				start = trip.startingPoint
 				end = trip.endingPoint
 				length = trip.length
@@ -342,7 +360,9 @@ def setUp(startFile, numTaxis):
 
 			REMAINING_TAXIS_COUNT = len(routeFrame.TaxiLocations) - len(routeFrame.PassengerLocations)
 			remainingTaxiIndices = random.sample(range(len(routeFrame.TaxiLocations)), REMAINING_TAXIS_COUNT)
+			
 			for i in remainingTaxiIndices:
+				
 				pt = routeFrame.TaxiLocations[i]
 				taxiIndex = getPolyFromPoint(path.taxiPolies, pt, i, len(routeFrame.TaxiLocations))
 				if taxiIndex != None:
@@ -363,6 +383,7 @@ def setUp(startFile, numTaxis):
 			remainingTripIndices = random.sample(range(len(TripSet)), NUMBER_TRIPS_TAKEN)
 
 			for tripIndex in remainingTripIndices:
+				
 				trip = TripSet[tripIndex]
 				start = trip.startingPoint
 				end = trip.endingPoint
@@ -396,11 +417,13 @@ def worker(RF, procnum, return_dict):
 
 #Concurrently iterates all the PathFinder while moving the Bench forward one timestep.
 def calculateTimeStep(bench, fileName, processingMinutes):
+	
 	calcEnd = datetime.datetime.now() + datetime.timedelta(minutes=processingMinutes)
 	tripBench = copy.deepcopy(bench)
 	manager = multiprocessing.Manager()
 	return_dict = manager.dict()
 	procs = []
+	
 	for i in range(1, len(tripBench.Bench)):
 		try:
 			RF = tripBench.Bench[i]
@@ -430,6 +453,7 @@ def calculateTimeStep(bench, fileName, processingMinutes):
 
 #Prepare the deep learning inputs for 50 samples starting from a given sample
 def prepInputs(fileName):
+	
 	filesList = os.listdir('RAWDATA/TRIPRECORDSSIMULATION') 
 	filesList.sort()
 	fileNameIndex = TripPredictor.binary_search(filesList, fileName)
